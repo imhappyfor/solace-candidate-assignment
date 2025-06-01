@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import { advocate } from "./_types/advocate";
 
 export default function Home() {
-  const [advocates, setAdvocates] = useState<advocate[]>([]);
   const [filteredAdvocates, setFilteredAdvocates] = useState<advocate[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [sortField, setSortField] = useState("firstName");
   const [sortOrder, setSortOrder] = useState("asc");
@@ -35,7 +35,6 @@ export default function Home() {
       const response = await fetch(url);
       const data = await response.json();
 
-      setAdvocates(data.data);
       setFilteredAdvocates(data.data);
       setTotalItems(data.pagination.total);
       setTotalPages(data.pagination.totalPages);
@@ -46,9 +45,25 @@ export default function Home() {
     }
   };
 
+  // Debounce search term
   useEffect(() => {
-    fetchAdvocates(currentPage, itemsPerPage, searchTerm, sortField, sortOrder);
-  }, [currentPage, itemsPerPage, searchTerm, sortField, sortOrder]);
+    const timer = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 500); // 500ms delay
+
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+
+  // Fetch advocates when debounced search term or other dependencies change
+  useEffect(() => {
+    fetchAdvocates(
+      currentPage,
+      itemsPerPage,
+      debouncedSearchTerm,
+      sortField,
+      sortOrder
+    );
+  }, [currentPage, itemsPerPage, debouncedSearchTerm, sortField, sortOrder]);
 
   const handleSort = (field: string) => {
     // If clicking the same field, toggle sort order
@@ -72,52 +87,23 @@ export default function Home() {
   };
 
   const onChange = (e: { target: { value: string } }) => {
-    const term = e.target.value.toLowerCase();
+    const term = e.target.value;
     setSearchTerm(term);
 
     // Reset to first page when searching
     setCurrentPage(1);
-
-    // For client-side filtering (if needed)
-    // We'll keep this for now, but ideally search should be handled server-side
-    const filtered = advocates.filter((advocate: advocate) => {
-      const firstNameMatch = advocate.firstName.toLowerCase().includes(term);
-      const lastNameMatch = advocate.lastName.toLowerCase().includes(term);
-      const cityMatch = advocate.city.toLowerCase().includes(term);
-      const degreeMatch = advocate.degree.toLowerCase().includes(term);
-      const specialtiesMatch = advocate.specialties.some((specialty) =>
-        specialty.toLowerCase().includes(term)
-      );
-      const yearsMatch = String(advocate.yearsOfExperience)
-        .toLowerCase()
-        .includes(term);
-
-      return (
-        firstNameMatch ||
-        lastNameMatch ||
-        cityMatch ||
-        degreeMatch ||
-        specialtiesMatch ||
-        yearsMatch
-      );
-    });
-
-    setFilteredAdvocates(filtered);
   };
 
   const onSearch = () => {
-    fetchAdvocates(1, itemsPerPage, searchTerm);
+    // Force immediate search by setting debounced term to current search term
+    setDebouncedSearchTerm(searchTerm);
+    setCurrentPage(1);
   };
 
   const resetSearch = () => {
     setSearchTerm("");
-    const searchInput = document.querySelector(
-      'input[placeholder="Search advocates..."]'
-    ) as HTMLInputElement;
-    if (searchInput) {
-      searchInput.value = "";
-    }
-    fetchAdvocates(1, itemsPerPage);
+    setDebouncedSearchTerm("");
+    setCurrentPage(1);
   };
 
   // Change page
@@ -135,7 +121,9 @@ export default function Home() {
           <p className="text-lg font-medium text-gray-700 mb-2">Search</p>
           <p className="text-sm text-gray-500 mb-4">
             Searching for:{" "}
-            <span className="font-medium text-gray-700">{searchTerm}</span>
+            <span className="font-medium text-gray-700">
+              {debouncedSearchTerm}
+            </span>
           </p>
           <div className="flex flex-col sm:flex-row gap-3 items-center justify-center">
             <input
