@@ -75,11 +75,6 @@ export default function Home() {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
 
-    const searchTermElement = document.getElementById("search-term");
-    if (searchTermElement) {
-      searchTermElement.innerHTML = term;
-    }
-
     // Reset to first page when searching
     setCurrentPage(1);
 
@@ -122,10 +117,6 @@ export default function Home() {
     if (searchInput) {
       searchInput.value = "";
     }
-    const searchTermElement = document.getElementById("search-term");
-    if (searchTermElement) {
-      searchTermElement.innerHTML = "";
-    }
     fetchAdvocates(1, itemsPerPage);
   };
 
@@ -144,12 +135,13 @@ export default function Home() {
           <p className="text-lg font-medium text-gray-700 mb-2">Search</p>
           <p className="text-sm text-gray-500 mb-4">
             Searching for:{" "}
-            <span id="search-term" className="font-medium text-gray-700"></span>
+            <span className="font-medium text-gray-700">{searchTerm}</span>
           </p>
           <div className="flex flex-col sm:flex-row gap-3 items-center justify-center">
             <input
               className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors w-full sm:w-64"
               placeholder="Search advocates..."
+              value={searchTerm}
               onChange={onChange}
               onKeyUp={(e) => e.key === "Enter" && onSearch()}
             />
