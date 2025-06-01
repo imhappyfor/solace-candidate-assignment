@@ -133,16 +133,19 @@ export default function Home() {
               value={searchTerm}
               onChange={onChange}
               onKeyUp={(e) => e.key === "Enter" && onSearch()}
+              aria-label="Search advocates by name, city, or specialty"
             />
             <button
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium w-full sm:w-auto"
               onClick={onSearch}
+              aria-label="Search"
             >
               Search
             </button>
             <button
               className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium w-full sm:w-auto"
               onClick={resetSearch}
+              aria-label="Reset search"
             >
               Reset
             </button>
@@ -151,43 +154,53 @@ export default function Home() {
       </div>
       <>
         <div className="overflow-x-auto shadow-lg rounded-lg">
-          <table className="min-w-full bg-white border border-gray-200">
+          <table className="min-w-full bg-white border border-gray-200" aria-label="Advocates list">
             <thead className="bg-blue-500">
               <tr>
                 <th
                   className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider border-b border-gray-200 cursor-pointer hover:bg-blue-900"
                   onClick={() => handleSort("firstName")}
+                  aria-sort={sortField === "firstName" ? (sortOrder === "asc" ? "ascending" : "descending") : undefined}
+                  aria-label="Sort by first name"
                 >
                   First Name {renderSortIndicator("firstName")}
                 </th>
                 <th
                   className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider border-b border-gray-200 cursor-pointer hover:bg-blue-900"
                   onClick={() => handleSort("lastName")}
+                  aria-sort={sortField === "lastName" ? (sortOrder === "asc" ? "ascending" : "descending") : undefined}
+                  aria-label="Sort by last name"
                 >
                   Last Name {renderSortIndicator("lastName")}
                 </th>
                 <th
                   className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider border-b border-gray-200 cursor-pointer hover:bg-blue-900"
                   onClick={() => handleSort("city")}
+                  aria-sort={sortField === "city" ? (sortOrder === "asc" ? "ascending" : "descending") : undefined}
+                  aria-label="Sort by city"
                 >
                   City {renderSortIndicator("city")}
                 </th>
                 <th
                   className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider border-b border-gray-200 cursor-pointer hover:bg-blue-900"
                   onClick={() => handleSort("degree")}
+                  aria-sort={sortField === "degree" ? (sortOrder === "asc" ? "ascending" : "descending") : undefined}
+                  aria-label="Sort by degree"
                 >
                   Degree {renderSortIndicator("degree")}
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider border-b border-gray-200">
+                <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider border-b border-gray-200" aria-label="Specialties">
                   Specialties
                 </th>
                 <th
                   className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider border-b border-gray-200 cursor-pointer hover:bg-blue-900"
                   onClick={() => handleSort("yearsOfExperience")}
+                  aria-sort={sortField === "yearsOfExperience" ? (sortOrder === "asc" ? "ascending" : "descending") : undefined}
+                  aria-label="Sort by years of experience"
                 >
                   Years of Experience {renderSortIndicator("yearsOfExperience")}
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider border-b border-gray-200">
+                <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider border-b border-gray-200" aria-label="Phone number">
                   Phone Number
                 </th>
               </tr>
