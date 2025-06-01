@@ -114,7 +114,7 @@ export default function Home() {
   return (
     <main className="max-w-6xl mx-auto p-6">
       <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-gray-900">Solace Advocates</h1>
+        <h1 className="text-4xl font-bold text-blue-900">Solace Advocates</h1>
       </div>
       <div className="text-center mb-8">
         <div className="max-w-md mx-auto">
@@ -151,42 +151,42 @@ export default function Home() {
       <>
         <div className="overflow-x-auto shadow-lg rounded-lg">
           <table className="min-w-full bg-white border border-gray-200">
-            <thead className="bg-gray-50">
+            <thead className="bg-blue-500">
               <tr>
                 <th
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b border-gray-200 cursor-pointer hover:bg-gray-100"
+                  className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider border-b border-gray-200 cursor-pointer hover:bg-blue-900"
                   onClick={() => handleSort("firstName")}
                 >
                   First Name {renderSortIndicator("firstName")}
                 </th>
                 <th
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b border-gray-200 cursor-pointer hover:bg-gray-100"
+                  className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider border-b border-gray-200 cursor-pointer hover:bg-blue-900"
                   onClick={() => handleSort("lastName")}
                 >
                   Last Name {renderSortIndicator("lastName")}
                 </th>
                 <th
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b border-gray-200 cursor-pointer hover:bg-gray-100"
+                  className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider border-b border-gray-200 cursor-pointer hover:bg-blue-900"
                   onClick={() => handleSort("city")}
                 >
                   City {renderSortIndicator("city")}
                 </th>
                 <th
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b border-gray-200 cursor-pointer hover:bg-gray-100"
+                  className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider border-b border-gray-200 cursor-pointer hover:bg-blue-900"
                   onClick={() => handleSort("degree")}
                 >
                   Degree {renderSortIndicator("degree")}
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b border-gray-200">
+                <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider border-b border-gray-200">
                   Specialties
                 </th>
                 <th
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b border-gray-200 cursor-pointer hover:bg-gray-100"
+                  className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider border-b border-gray-200 cursor-pointer hover:bg-blue-900"
                   onClick={() => handleSort("yearsOfExperience")}
                 >
                   Years of Experience {renderSortIndicator("yearsOfExperience")}
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b border-gray-200">
+                <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider border-b border-gray-200">
                   Phone Number
                 </th>
               </tr>
